@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 import os
 import warnings
 
+from langchain_community.llms import OpenAI
+from langchain.chains.question_answering import load_qa_chain
+
 warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
 
 load_dotenv()
@@ -12,8 +15,12 @@ load_dotenv()
 persist_directory = os.environ.get('PERSIST_DIRECTORY')
 model = os.environ.get("MODEL")
 collection = os.environ.get("COLLECTION_NAME")
+os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_KEY")
+openai_model_name = os.environ.get("OPENAI_MODEL")
 
 embedding = SentenceTransformer(model)
+llm = llm = OpenAI(model_name=openai_model_name)
+chain = load_qa_chain(llm, chain_type="stuff")
 
 client = chromadb.PersistentClient(path=persist_directory)
 collection = client.get_collection(collection)
@@ -24,5 +31,10 @@ def get_results(query):
                                 n_results=3)
     return results["documents"][0]
 
-query = "what is rivalry between india and australia?"
-print(get_results(query=query))
+def get_answer(query):
+    docs = get_results(query=query)
+    answer =  chain.run(input_documents=docs, question=query)
+    return answer
+
+
+

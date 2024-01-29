@@ -4,3 +4,5 @@ sentence_transformers
 chromadb
 langchain-community
 python-dotenv
+fastapi
+uvicorn
