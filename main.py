@@ -7,9 +7,9 @@ embedding = SentenceTransformer('paraphrase-MiniLM-L3-v2')
 
 # get persisted database
 persist_directory = "/home/user/Desktop/Main Projects/Chatbot-Using-OpenAI-and-ChromaDB/db"
-#vectordb = Chroma(persist_directory=persist_directory,
-#                 embedding_function=embedding)
-#vectordb.get()
+vectordb = Chroma(persist_directory=persist_directory,
+                 embedding_function=embedding)
+vectordb.get()
 
 # access collection
 client = chromadb.PersistentClient(path=persist_directory)

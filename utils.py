@@ -9,19 +9,21 @@ from langchain_community.llms import OpenAI
 from langchain.chains.question_answering import load_qa_chain
 
 warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
-
 load_dotenv()
 
+# get enviroment variables
 persist_directory = os.environ.get('PERSIST_DIRECTORY')
 model = os.environ.get("MODEL")
 collection = os.environ.get("COLLECTION_NAME")
 os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_KEY")
 openai_model_name = os.environ.get("OPENAI_MODEL")
 
+# get models
 embedding = SentenceTransformer(model)
 llm = llm = OpenAI(model_name=openai_model_name)
 chain = load_qa_chain(llm, chain_type="stuff")
 
+# load the persisted chroma database 
 client = chromadb.PersistentClient(path=persist_directory)
 collection = client.get_collection(collection)
 
