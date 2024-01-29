@@ -1,5 +1,5 @@
-# Chatbot-Using-OpenAI-and-ChromaDB
-This repository consist of codebase for Chatbot using LLM and vector database
+# QA-bot-Using-OpenAI-and-ChromaDB
+This repository consist of codebase for QA bot using LLM and vector database
 
 ## Architecture
 
