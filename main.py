@@ -1,23 +1,25 @@
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import SentenceTransformerEmbeddings
-import warnings
+import streamlit as st
+import requests
+from dotenv import load_dotenv
+import os
+import json
 
-warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
+load_dotenv()
+url = os.environ.get("URL")
 
-embedding = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+def run(url):
+    st.set_page_config(page_title='🏏 Ask the QA about Cricket 🏏')
+    st.title('🏏 Ask the QA about Cricket 🏏')
+    # Query text
+    query_text = st.text_input('Enter your question: ',
+                            placeholder = 'Ask your question to QA bot.')
+    
+    data = {"question": query_text}
 
-# get persisted database
-persist_directory = "/home/user/Desktop/Main Projects/Final bot/db"
-vectordb = Chroma(persist_directory=persist_directory,
-                 embedding_function=embedding)
-vectordb.get()
+    with st.spinner('Calculating...'):
+        output = requests.post(url, json=data)
+        st.success(output.text)
 
-
-
-# test with a query
-query = "What is the rivalry between india and pakistan?"
-matching_docs = vectordb.similarity_search(query, k=3)
-
-print(matching_docs)
-
+if __name__ == '__main__':
+    run(url=url)
 
