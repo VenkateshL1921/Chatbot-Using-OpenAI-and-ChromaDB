@@ -1,27 +1,23 @@
 from langchain_community.vectorstores import Chroma
-from sentence_transformers import SentenceTransformer
-import chromadb
+from langchain_community.embeddings import SentenceTransformerEmbeddings
+import warnings
 
+warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
 
-embedding = SentenceTransformer('paraphrase-MiniLM-L3-v2')
+embedding = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
 # get persisted database
-persist_directory = "/home/user/Desktop/Main Projects/Chatbot-Using-OpenAI-and-ChromaDB/db"
+persist_directory = "/home/user/Desktop/Main Projects/Final bot/db"
 vectordb = Chroma(persist_directory=persist_directory,
                  embedding_function=embedding)
 vectordb.get()
 
-# access collection
-client = chromadb.PersistentClient(path=persist_directory)
-collection = client.get_collection("test")
+
 
 # test with a query
-query = "what is rivalry between india and australia?"
-input_em = embedding.encode(query).tolist()
-results = collection.query(
-    query_embeddings=[input_em],
-    n_results=1)
+query = "What is the rivalry between india and pakistan?"
+matching_docs = vectordb.similarity_search(query, k=3)
 
-print(results)
+print(matching_docs)
 
 
