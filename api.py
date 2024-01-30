@@ -12,7 +12,7 @@ class Query(BaseModel):
 async def greet(name:str="Cricket"):
    return f"Hello, This is a {name} QA bot"
 
-@app.post("/get-similar-result}")
+@app.post("/get-similar-result")
 async def query_result(query:Query):
    result = get_results(query=query.question)
    return result

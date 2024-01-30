@@ -1,5 +1,5 @@
 # QA-bot-Using-OpenAI-and-ChromaDB
-This repository consist of codebase of QA bot for cricket using LLM and vector database
+This repository consist of codebase of QA bot and Chatbot for cricket using LLM and vector database
 
 ## Architecture
 
@@ -28,3 +28,6 @@ This repository consist of codebase of QA bot for cricket using LLM and vector d
 7. Created API endpoints using FastAPI
 8. Created frontend for QA model using Streamlit and integrated it with FastAPI
  
+## Added Chatbot 
+
+![Screenshot from 2024-01-30 14-39-20](https://github.com/VenkateshL1921/QA-Bot-Using-OpenAI-and-ChromaDB/assets/108605062/a14975c3-75d9-4667-8ad5-13addaa7f367)
